@@ -21,13 +21,6 @@ import Ticket from './Ticket'
 
 gulp.task('printOwnedEvents', async() => {
 
-	const low = require('lowdb')
-	const FileSync = require('lowdb/adapters/FileSync')
-	const adapter = new FileSync('data.db.json')
-
-	const db = low(adapter)
-	db.defaults({ events: [] }).write()
-
 	let iterate = (page) => eventbrite.get('/users/244798500761/owned_events/', {}).then(it => {
 		let hasMore = page <= it.data.pagination.page_count
 		console.log(`Iterated ${page}. Has more ${hasMore}`)
@@ -44,7 +37,7 @@ gulp.task('printOwnedEvents', async() => {
 })
 
 
-gulp.task('default', async () => {
+gulp.task('publishEffectiveJava', async () => {
 
 	let checkoutId = await checkout.id()
 
@@ -90,8 +83,7 @@ gulp.task('default', async () => {
 	console.log(`Total number of workshops: ${workshops.get().length}`)
 
 	let workshopsFiltered = workshops.get()
-		.filter(it => it.startsWith("training/java") && !it.includes("mar"))
-		.filter(it => !db.get('events').filter(e => e.link == `https://devchampions.com/${it}`).value().length)
+		.filter(it => it.startsWith("training/java"))
 		
 	console.log(`Number of workshops after filtering: ${workshopsFiltered.length}`)
 
