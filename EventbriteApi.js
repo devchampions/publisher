@@ -5,7 +5,7 @@ class EvenbriteApi {
 	constructor(x) {
 
 		this.token = process.env.EVENTBRITE_TOKEN
-		if (!token) {
+		if (!this.token) {
 			throw "Please provide EVENTBRITE_TOKEN env variable"
 		}
 
