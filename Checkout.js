@@ -3,9 +3,26 @@ import eventbrite from './EventbriteApi'
 
 class Checkout {
 
+	constructor(country, currency, email) {
+		if (!country) {
+			throw `No country provided.`
+		}
+
+		if (!currency) {
+			throw `No currency provided.`
+		}		
+
+		if (!email) {
+			throw `No email provided!`
+		}		
+		this.country = country
+		this.currency = currency
+		this.email = email
+	}
+
 	id() {
 		return eventbrite
-			.get('/checkout_settings', { params: { country: "EE", currency: "EUR" } })
+			.get('/checkout_settings', { params: { country: this.country, currency: this.currency } })
 			.then(it => {
 		  		let checkouts = it.data.checkout_settings
 				if (checkouts.length) {
@@ -15,15 +32,15 @@ class Checkout {
 					return eventbrite
 						.post('/checkout_settings/',  {
 							checkout_settings: {
-								country_code: "EE",
-								currency_code: "EUR",
+								country_code: this.country,
+								currency_code: this.currency,
 								checkout_method: "paypal",
 							},
-							paypal_email: "eduards@sizovs.net"
+							paypal_email: this.email
 						})
 						.then(it => it.data.id)
 				}
-			  })		
+			})		
 	}
 }
 
@@ -37,4 +54,4 @@ class CheckoutId {
 	}
 }
 
-export default new Checkout()
+export default Checkout

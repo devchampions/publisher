@@ -11,7 +11,7 @@ class EvenbriteApi {
 
 		this.axios = axios.create({
 		  baseURL: 'https://www.eventbriteapi.com/v3/',
-		  headers: { Authorization: `Bearer ${token}` }
+		  headers: { Authorization: `Bearer ${this.token}` }
 		})		
 	} 
 
