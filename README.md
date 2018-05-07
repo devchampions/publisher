@@ -12,3 +12,14 @@ For Windows, run this command first:
 Then run `yarn` to get all the dependencies:
 
     yarn
+
+## Running 
+
+Define environment variable with EventBrite OAuth token:
+
+    export EVENTBRITE_TOKEN=********
+
+Run publication task:
+
+    gulp publishExtremeAutomation
+
