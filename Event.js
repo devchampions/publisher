@@ -9,11 +9,17 @@ import Timezone from './Timezone'
 import eventbrite from './EventbriteApi'
 import hash from 'object-hash'
 
-const firebaseEvents = 'https://dc-publisher.firebaseio.com/eventbrite/events.json'
-
 class Event {
 
 	constructor(url, title, image, body, location, date, tickets, checkoutId) {
+
+		let firebaseStore = process.env.FIREBASE_STORE
+		if (!firebaseStore) {
+			throw "Please provide FIREBASE_STORE env variable. E.g. http://project.firebaseio.com/store"
+		}
+
+		this.firebaseEvents = `${firebaseStore}/events.json` 
+
 		if (!title) {
 			throw `No title provided for event ${url}.`
 		}
@@ -48,11 +54,10 @@ class Event {
 	async republish() {
 		let imgId = await this.img.id();
 		let venue = await this.location.eventbriteVenue()
-		let externalId = new ExternalId(this.url)		
+		let externalId = new ExternalId(this.url)
 		let eventbriteId = await externalId.eventbriteId()
 		let isNewEvent = !eventbriteId
 		console.log(`${this.url} is new: ${isNewEvent} ${eventbriteId}`)
-
 		
 		let [newEventbriteId, live] = await this.exportToEventbrite(venue, imgId, eventbriteId)
 		if (isNewEvent) {
@@ -142,11 +147,18 @@ class Event {
 class ExternalId {
 
 	constructor(id) {
+		let firebaseStore = process.env.FIREBASE_STORE
+		if (!firebaseStore) {
+			throw "Please provide FIREBASE_STORE env variable. E.g. http://project.firebaseio.com/store"
+		}
+
+		this.firebaseEvents = `${firebaseStore}/events.json` 
+
 		this.id = id
 	}
 	
 	eventbriteId() {
-		return axios.get(`${firebaseEvents}?orderBy="ext_id"&equalTo="${this.id}"`)
+		return axios.get(`${this.firebaseEvents}?orderBy="ext_id"&equalTo="${this.id}"`)
 			.then(it => [it.data]
 					.map(Object.values)
 					.pop()
@@ -157,7 +169,7 @@ class ExternalId {
 
 	mapTo(eventbriteId) {
 		console.log("Mapping ids")
-		return axios.post(firebaseEvents, { evt_id: eventbriteId, ext_id: this.id})
+		return axios.post(this.firebaseEvents, { evt_id: eventbriteId, ext_id: this.id})
 					.then(it => eventbriteId)
 	}
 }

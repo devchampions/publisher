@@ -19,6 +19,10 @@ Define environment variable with EventBrite OAuth token:
 
     export EVENTBRITE_TOKEN=********
 
+Define environment variable with FireBase store:
+
+    export FIREBASE_STORE=http://<project>.firebaseio.com/<store>
+
 Run publication task:
 
     gulp publishExtremeAutomation

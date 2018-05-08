@@ -144,12 +144,12 @@ gulp.task('publishExtremeAutomation', async () => {
 	let workshopsFiltered = workshops.get()
 		.filter(it => it.startsWith("training/xa"))
 	
-	// console.log(`debug: ${workshopsFiltered}`)
+	workshopsFiltered.forEach((w) => console.log(`  ${w}`))	
 	console.log(`Number of workshops after filtering: ${workshopsFiltered.length}`)
 
-	// workshopsFiltered
-	//	.splice(0, 1)
-	//	.map(it => `https://devchampions.com/${it}`)
-	//	.map(url => fetchEvent(url).then(event => event.republish()))
+	workshopsFiltered
+		.splice(0, 1)
+		.map(it => `https://devchampions.com/${it}`)
+		.map(url => fetchEvent(url).then(event => event.republish()))
 
 })
