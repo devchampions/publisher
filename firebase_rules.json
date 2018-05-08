@@ -1,0 +1,14 @@
+{
+	"rules": {
+		".read": true,
+		".write": true,
+		"eventbrite": {
+			"venues": {
+				".indexOn": ["ext_id", "evt_id"]
+			},
+			"events": {
+				".indexOn": ["ext_id", "evt_id"]
+			}        
+		}
+	}
+}
