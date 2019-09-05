@@ -1,21 +1,11 @@
 'use strict'
 
-import fs from 'fs'
-import line from 'readline'
-
-import hash from 'object-hash'
-import gulp from 'gulp'
-import axios from 'axios'
-import delay from 'delay'
-import querystring from 'querystring'
-import cheerio from 'cheerio'
-import moment from 'moment'
-import fetch from 'node-fetch'
-import Promise from 'bluebird'
+import * as gulp from 'gulp'
+import * as cheerio from 'cheerio'
+import * as fetch from 'node-fetch'
 
 import eventbrite from './EventbriteApi'
 import Checkout from './Checkout'
-import Schedule from './Schedule'
 import Event from './Event'
 import Ticket from './Ticket'
 
@@ -115,6 +105,7 @@ gulp.task('publishExtremeAutomation', async () => {
 				$("#description article")
 					.prepend(ticketSales)
 					.append($("#trainer .training"))
+					.append($("#details article"))
 					.append(ticketSales).html()
 			])
 			.then(it => {

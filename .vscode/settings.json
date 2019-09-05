@@ -4,5 +4,12 @@
     "editor.renderControlCharacters": false,
     "git.enableSmartCommit": true,
     "editor.tabSize": 8,
-    "editor.insertSpaces": false
+    "editor.insertSpaces": false,
+    "cSpell.words": [
+        "Eventbrite",
+        "adamovich",
+        "andrey",
+        "firebasify",
+        "pino"
+    ]
 }
