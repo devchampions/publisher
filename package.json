@@ -25,7 +25,7 @@
     "pino": "^5.13.2",
     "uuid": "^3.3.3",
     "emoji-regex": "^8.0.0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.19"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.5.5",
